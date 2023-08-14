@@ -1,8 +1,8 @@
-# Nuxt 3 Minimal Starter
+# Nuxt 3 SPA + Yandex Cloud Template
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Nuxt 3 Yandex cloud deployment template with SPA mode & serverless functions 
 
-## Setup
+## Development
 
 Make sure to install the dependencies:
 
@@ -17,22 +17,7 @@ pnpm install
 yarn install
 ```
 
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-```
-
-## Production
+## Deployment
 
 Build the application for production:
 
@@ -47,17 +32,6 @@ pnpm run build
 yarn build
 ```
 
-Locally preview production build:
+## Contributions
 
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+Any issue and/or pull request is a welcome one
