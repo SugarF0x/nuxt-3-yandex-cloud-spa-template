@@ -2,11 +2,20 @@
   "name": "nuxt-app",
   "private": true,
   "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev",
+    "bd": "yarn build && yarn deploy",
+    "build": "nuxt build --dotenv .env.prod",
+    "deploy": "yarn deploy:backend && yarn deploy:frontend",
+    "deploy:backend": "sh yc-deploy.backend.sh",
+    "deploy:frontend": "sh yc-deploy.frontend.sh",
+    "deploy:gateway": "sh yc-deploy.api-gateway.sh",
+    "dev": "yarn dev:update-iam-token && nuxt dev --dotenv .env.local",
+    "dev:update-iam-token": "sh yc.update-local-iam-token.sh",
     "generate": "nuxt generate",
+    "postinstall": "nuxt prepare && patch-package",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "ydb:init": "docker pull cr.yandex/yc/yandex-docker-local-ydb:latest",
+    "ydb:run": "cd server/ydb/local-instance && sh ../yc.ydb.run.sh",
+    "ydb:stop": "docker stop ydb-local"
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
