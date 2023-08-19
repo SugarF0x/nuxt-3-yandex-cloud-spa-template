@@ -20,6 +20,10 @@
   "devDependencies": {
     "@nuxt/devtools": "latest",
     "@types/node": "^18.17.3",
-    "nuxt": "^3.6.5"
+    "nuxt": "^3.6.5",
+    "patch-package": "^8.0.0"
+  },
+  "dependencies": {
+    "ydb-sdk": "^4.6.0"
   }
 }

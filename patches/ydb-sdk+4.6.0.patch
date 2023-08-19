@@ -1,0 +1,44 @@
+diff --git a/node_modules/ydb-sdk/build/esm/src/discovery.js b/node_modules/ydb-sdk/build/esm/src/discovery.js
+index 395cc46..3050647 100644
+--- a/node_modules/ydb-sdk/build/esm/src/discovery.js
++++ b/node_modules/ydb-sdk/build/esm/src/discovery.js
+@@ -76,7 +76,7 @@ class DiscoveryService extends utils_1.AuthenticatedService {
+     periodicDiscoveryId;
+     endpoints = [];
+     currentEndpointIndex = 0;
+-    events = new events_1.default();
++    events = new events_1.default.EventEmitter();
+     logger;
+     // private selfLocation: string = '';
+     constructor(settings) {
+diff --git a/node_modules/ydb-sdk/build/esm/src/table.js b/node_modules/ydb-sdk/build/esm/src/table.js
+index fc639cb..866a9fa 100644
+--- a/node_modules/ydb-sdk/build/esm/src/table.js
++++ b/node_modules/ydb-sdk/build/esm/src/table.js
+@@ -232,7 +232,7 @@ class ExecuteScanQuerySettings {
+     }
+ }
+ exports.ExecuteScanQuerySettings = ExecuteScanQuerySettings;
+-class Session extends events_1.default {
++class Session extends events_1.default.EventEmitter {
+     api;
+     endpoint;
+     sessionId;
+@@ -597,7 +597,7 @@ __decorate([
+     utils_1.pessimizable
+ ], Session.prototype, "streamExecuteScanQuery", null);
+ exports.Session = Session;
+-class SessionPool extends events_1.default {
++class SessionPool extends events_1.default.EventEmitter {
+     database;
+     authService;
+     sslCredentials;
+@@ -774,7 +774,7 @@ class SessionPool extends events_1.default {
+     }
+ }
+ exports.SessionPool = SessionPool;
+-class TableClient extends events_1.default {
++class TableClient extends events_1.default.EventEmitter {
+     pool;
+     constructor(settings) {
+         super();
