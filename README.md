@@ -1,3 +1,5 @@
+# WORK IN PROGRESS
+
 # Nuxt 3 SPA + Yandex Cloud Template
 
 Nuxt 3 Yandex cloud deployment template with SPA mode & serverless functions 
