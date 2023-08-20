@@ -4,7 +4,10 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   typescript: { strict: true },
   experimental: { noVueServer: true },
-  modules: ['modules/prepare-for-yandex-functions'],
+  modules: [
+    '@sidebase/nuxt-auth',
+    'modules/prepare-for-yandex-functions'
+  ],
   nitro: {
     prerender: {
       crawlLinks: false,
@@ -14,5 +17,12 @@ export default defineNuxtConfig({
     rollupConfig: {
       output: { sourcemap: false }
     }
-  }
+  },
+  auth: {
+    baseURL: process.env.AUTH_ORIGIN,
+    provider: {
+      addDefaultCallbackUrl: true,
+      type: 'authjs'
+    }
+  },
 })
