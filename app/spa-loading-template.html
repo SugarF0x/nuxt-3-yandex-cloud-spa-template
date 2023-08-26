@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Loading...</title>
+
+  <style>
+    body, html {
+      background: #181818;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    #loading-gif {
+      width: min(512px, 80vw);
+    }
+
+    .indeterminate-progress-bar {
+      background-color: #1e1e1e;
+      border-radius: 9999px;
+      height: 0.5rem;
+      width: min(320px, 50vw);
+      position: relative;
+      overflow: hidden;
+      margin: 0 auto;
+    }
+
+    .indeterminate-progress-bar__progress {
+      background-color: #FBFBF8;
+      border-radius: 9999px;
+      position: absolute;
+      bottom: 0;
+      top: 0;
+      width: 50%;
+      animation-duration: 2s;
+      animation-iteration-count: infinite;
+      animation-name: indeterminate-progress-bar;
+    }
+
+    @keyframes indeterminate-progress-bar {
+      from {
+        left: -50%;
+      }
+      to {
+        left: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <img id="loading-gif" src="/pandemonica.gif" alt="loader" />
+  <div class="indeterminate-progress-bar">
+    <div class="indeterminate-progress-bar__progress"></div>
+  </div>
+</body>
+</html>
