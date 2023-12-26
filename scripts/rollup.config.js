@@ -10,7 +10,7 @@ export default {
   },
   plugins: [
     nodeResolve({
-      preferBuiltins: false,
+      preferBuiltins: true,
       exportConditions: ["node"]
     }),
     commonjs(),
