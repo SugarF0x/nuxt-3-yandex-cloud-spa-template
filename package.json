@@ -3,17 +3,23 @@
   "private": true,
   "scripts": {
     "bd": "yarn build && yarn deploy",
-    "build": "nuxt build --dotenv .env.prod",
-    "deploy": "yarn deploy:backend && yarn deploy:frontend",
-    "deploy:backend": "sh yc-deploy.backend.sh",
-    "deploy:frontend": "sh yc-deploy.frontend.sh",
-    "deploy:gateway": "sh yc-deploy.api-gateway.sh",
-    "dev": "yarn dev:update-iam-token && nuxt dev --dotenv .env.local",
-    "dev:update-iam-token": "sh yc.update-local-iam-token.sh",
+    "build": "nuxt build --dotenv env/.env.prod",
+    "deploy": "yarn deploy:frontend & yarn deploy:backend",
+
+    "deploy:frontend": "sh scripts/yc-deploy.frontend.sh",
+    "deploy:backend": "sh scripts/yc-deploy.backend.sh",
+    "deploy:gateway": "sh scripts/yc-deploy.api-gateway.sh",
+    
+    "dev": "nuxt dev --dotenv env/.env.local",
+    "dev:update-iam-token": "sh scripts/yc.update-local-iam-token.sh",
+
     "generate": "nuxt generate",
-    "postinstall": "nuxt prepare && patch-package",
     "preview": "nuxt preview",
+
+    "postinstall": "nuxt prepare && patch-package",
+
     "//": "VVV LINUX ONLY VVV",
+
     "ydb:init": "docker pull cr.yandex/yc/yandex-docker-local-ydb:latest",
     "ydb:run": "cd server/ydb/local-instance && sh ../yc.ydb.run.sh",
     "ydb:stop": "docker stop ydb-local"

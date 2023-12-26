@@ -1,4 +1,4 @@
-source ./.env.cloud
+  source ./env/.env.cloud
 
 # sync directory by size only for each rebuild updates date and forces a re-sync of seemingly unchanged files
 aws --profile yandex \
