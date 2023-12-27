@@ -1,4 +1,4 @@
-import { Driver, getCredentialsFromEnv, Session } from 'ydb-sdk'
+import { Driver, getCredentialsFromEnv, Session, TypedData, TypedValues } from "ydb-sdk"
 
 export default async function <T = unknown>(callback: (session: Session) => Promise<T>) {
   const driver = new Driver({
@@ -14,4 +14,14 @@ export default async function <T = unknown>(callback: (session: Session) => Prom
   await driver.destroy()
 
   return result
+}
+
+export async function ydbGet<T>(session: Session, query: string, params: Record<string, TypedValues | undefined>): Promise<T[]> {
+  const { resultSets } = await session.executeQuery(query , filterOptionalQueryParams(params))
+  return TypedData.createNativeObjects(resultSets[0]) as T[]
+}
+
+export async function ydbPost(session: Session, query: string, params: Record<string, TypedValues | undefined>): Promise<void> {
+  await session.executeQuery(query , filterOptionalQueryParams(params))
+  return
 }
