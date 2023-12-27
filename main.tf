@@ -6,6 +6,7 @@ variable "DNS_ZONE_ID" { type = string }
 variable "S3_BUCKET_ID" { type = string }
 variable "SSL_CERTIFICATE_ID" { type = string }
 variable "SERVICE_ACCOUNT_ID" { type = string }
+variable "FUNCTION_NAME" { type = string }
 
 terraform {
   required_providers {
@@ -56,7 +57,7 @@ resource "yandex_dns_recordset" "website_record" {
 }
 
 resource "yandex_function" "cloud-function" {
-  name               = "${var.S3_BUCKET_ID}-api"
+  name               = var.FUNCTION_NAME
   description        = "${var.S3_BUCKET_ID} api cloud function"
   user_hash          = "any_user_defined_string"
   runtime            = "nodejs16"

@@ -6,7 +6,7 @@ source ./env/.env.cloud
 (cd ./.output/temp/server-to-zip && zip -r -X "../server.zip" .)
 
 yc serverless function version create \
-  --function-name="$CLOUD_FUNCTION_NAME" \
+  --function-name="$FUNCTION_NAME" \
   --runtime nodejs16 \
   --entrypoint index.handler \
   --memory 128m \
