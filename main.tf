@@ -6,7 +6,10 @@ variable "DNS_ZONE_ID" { type = string }
 variable "S3_BUCKET_ID" { type = string }
 variable "SSL_CERTIFICATE_ID" { type = string }
 variable "SERVICE_ACCOUNT_ID" { type = string }
+variable "FOLDER_ID" { type = string }
 variable "FUNCTION_NAME" { type = string }
+variable "YDB_NAME" { type = string }
+variable "GATEWAY_NAME" { type = string }
 
 terraform {
   required_providers {
@@ -27,10 +30,9 @@ resource "yandex_storage_bucket" "website_bucket" {
   access_key = var.ACCESS_KEY
   secret_key = var.SECRET_KEY
 
-  bucket                = var.S3_BUCKET_ID
-  acl                   = "public-read"
-  default_storage_class = "DEFAULT"
-  max_size              = 104857600
+  bucket   = var.S3_BUCKET_ID
+  acl      = "public-read"
+  max_size = 104857600
 
   website {
     index_document = "index.html"
@@ -58,13 +60,24 @@ resource "yandex_dns_recordset" "website_record" {
 
 resource "yandex_function" "cloud-function" {
   name               = var.FUNCTION_NAME
-  description        = "${var.S3_BUCKET_ID} api cloud function"
+  description        = "${var.FUNCTION_NAME} api cloud function"
   user_hash          = "any_user_defined_string"
   runtime            = "nodejs16"
   entrypoint         = "index.handler"
   memory             = "128"
   execution_timeout  = "3"
-  service_account_id = var.SERVICE_ACCOUNT_ID
+  folder_id          = var.FOLDER_ID
+  content {
+    zip_filename = "./server/dummy.zip"
+  }
+}
+
+
+resource "yandex_ydb_database_serverless" "ydb" {
+  name      = var.YDB_NAME
+  folder_id = var.FOLDER_ID
+
+  deletion_protection = false
 }
 
 resource "yandex_api_gateway" "api-gateway" {
@@ -72,8 +85,10 @@ resource "yandex_api_gateway" "api-gateway" {
     yandex_function.cloud-function
   ]
 
-  name = var.S3_BUCKET_ID
-  description = "${var.S3_BUCKET_ID} API gateway"
+  folder_id = var.FOLDER_ID
+
+  name        = var.GATEWAY_NAME
+  description = "${var.GATEWAY_NAME} API gateway"
 
   spec = <<-EOT
 openapi: "3.0.0"

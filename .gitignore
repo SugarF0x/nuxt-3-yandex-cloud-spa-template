@@ -25,3 +25,7 @@ logs
 .env.*
 !.env.example
 !.env.*.example
+
+# These should be stored remotely for others to have access to deployment or for CI/CD, ideally in a separate bucket
+*.tfstate
+*.tfstate.*

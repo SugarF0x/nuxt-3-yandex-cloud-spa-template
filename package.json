@@ -1,6 +1,7 @@
 {
   "name": "nuxt-app",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "yarn env && nuxt dev",
     "bd": "yarn build && yarn deploy",
@@ -11,7 +12,7 @@
     "env": "yarn env:token && yarn env:keys && yarn env:service-account && yarn env:terraform",
     "env:token": "sh scripts/env/get-token.sh",
     "env:keys": "sh scripts/env/get-keys.sh",
-    "env:service-account": "node scripts/env/get-service-account-id.js",
+    "env:service-account": "node scripts/env/get-service-account-id.cjs",
     "env:terraform": "sh scripts/env/get-terraform.sh",
     "terraform": "yarn env && source scripts/env/export-terraform.sh && terraform",
     "generate": "nuxt generate",
