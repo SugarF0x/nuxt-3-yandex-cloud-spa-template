@@ -1,3 +1,11 @@
+variable "YC_ZONE" { type = string }
+variable "TOKEN" { type = string }
+variable "ACCESS_KEY" { type = string }
+variable "SECRET_KEY" { type = string }
+variable "DNS_ZONE_ID" { type = string }
+variable "S3_BUCKET_ID" { type = string }
+variable "SSL_CERTIFICATE_ID" { type = string }
+
 terraform {
   required_providers {
     yandex = {
@@ -6,14 +14,6 @@ terraform {
   }
   required_version = ">= 0.13"
 }
-
-variable "YC_ZONE" { type = string }
-variable "TOKEN" { type = string }
-variable "ACCESS_KEY" { type = string }
-variable "SECRET_KEY" { type = string }
-variable "DNS_ZONE_ID" { type = string }
-variable "S3_BUCKET_ID" { type = string }
-variable "SSL_CERTIFICATE_ID" { type = string }
 
 provider "yandex" {
   zone    = var.YC_ZONE

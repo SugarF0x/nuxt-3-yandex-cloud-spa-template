@@ -1,4 +1,12 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
+import { config } from 'dotenv'
+
+const ENV_FILES = [
+  process.env.NODE_ENV === 'production' ? 'prod' : 'local',
+  'res'
+]
+
+for (const file of ENV_FILES) config({ path: `./env/.env.${file}` })
+
 export default defineNuxtConfig({
   ssr: false,
   devtools: { enabled: true },
