@@ -50,14 +50,7 @@ resource "yandex_storage_bucket" "website_bucket" {
   }
 }
 
-resource "yandex_dns_recordset" "website_record" {
-  zone_id = var.DNS_ZONE_ID
-  name    = "${var.S3_BUCKET_ID}."
-  type    = "ANAME"
-  ttl     = 600
-  data    = ["${var.S3_BUCKET_ID}.website.yandexcloud.net"]
-}
-
+# TODO: figure out how to pass env vars straight into here
 resource "yandex_function" "cloud-function" {
   name               = var.FUNCTION_NAME
   description        = "${var.FUNCTION_NAME} api cloud function"
@@ -102,13 +95,16 @@ resource "yandex_api_gateway" "api-gateway" {
   name        = var.GATEWAY_NAME
   description = "${var.GATEWAY_NAME} API gateway"
 
+  custom_domains {
+    fqdn = var.S3_BUCKET_ID
+    certificate_id = var.SSL_CERTIFICATE_ID
+  }
+
   spec = <<-EOT
-openapi: "3.0.0"
+openapi: 3.0.0
 info:
   version: 1.0.0
-  title: Test API
-servers:
-  - url: https://${var.S3_BUCKET_ID}
+  title: ${var.GATEWAY_NAME} API
 paths:
   /:
     get:
@@ -142,4 +138,16 @@ paths:
         function_id: ${yandex_function.cloud-function.id}
         service_account_id: ${var.SERVICE_ACCOUNT_ID}
 EOT
+}
+
+resource "yandex_dns_recordset" "website_record" {
+  depends_on = [
+    yandex_api_gateway.api-gateway
+  ]
+
+  zone_id = var.DNS_ZONE_ID
+  name    = "${var.S3_BUCKET_ID}."
+  type    = "ANAME"
+  ttl     = 600
+  data    = [yandex_api_gateway.api-gateway.domain]
 }
