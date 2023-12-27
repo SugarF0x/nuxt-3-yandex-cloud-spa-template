@@ -58,6 +58,7 @@ resource "yandex_dns_recordset" "website_record" {
   data    = ["${var.S3_BUCKET_ID}.website.yandexcloud.net"]
 }
 
+# TODO: make this function public
 resource "yandex_function" "cloud-function" {
   name               = var.FUNCTION_NAME
   description        = "${var.FUNCTION_NAME} api cloud function"
