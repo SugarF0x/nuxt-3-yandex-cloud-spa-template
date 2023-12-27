@@ -2,10 +2,12 @@ import { config } from 'dotenv'
 
 const ENV_FILES = [
   process.env.NODE_ENV === 'production' ? 'prod' : 'local',
-  'res'
+  'token'
 ]
 
 for (const file of ENV_FILES) config({ path: `./env/.env.${file}` })
+
+process.env.YDB_ACCESS_TOKEN_CREDENTIALS = process.env.TOKEN
 
 export default defineNuxtConfig({
   ssr: false,

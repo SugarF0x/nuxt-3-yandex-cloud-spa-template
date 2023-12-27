@@ -1,7 +1,5 @@
-ACCESS_KEY=$(aws --profile yandex configure get aws_access_key_id)
-SECRET_KEY=$(aws --profile yandex configure get aws_secret_access_key)
-TOKEN=$(yc iam create-token)
-
+source ./env/.env.token
+source ./env/.env.keys
 source ./env/.env.cloud
 
 echo "
