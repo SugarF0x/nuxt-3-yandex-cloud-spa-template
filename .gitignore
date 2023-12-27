@@ -18,6 +18,8 @@ logs
 .fleet
 .idea
 
+.terraform
+
 # Local env files
 .env
 .env.*

@@ -6,10 +6,14 @@
     "build": "nuxt build --dotenv env/.env.prod",
     "deploy": "yarn deploy:frontend & yarn deploy:backend",
 
+    "terraform": "yarn terraform:env && yarn terraform:source && terraform",
+    "terraform:source": "export $(grep -v '^#' ./env/.env.terraform | xargs)",
+    "terraform:env": "sh ./scripts/generate-terraform-env-vars.sh",
+
     "deploy:frontend": "sh scripts/yc-deploy.frontend.sh",
     "deploy:backend": "sh scripts/yc-deploy.backend.sh",
     "deploy:gateway": "sh scripts/yc-deploy.api-gateway.sh",
-    
+
     "dev": "nuxt dev --dotenv env/.env.local",
     "dev:update-iam-token": "sh scripts/yc.update-local-iam-token.sh",
 
