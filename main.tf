@@ -58,7 +58,6 @@ resource "yandex_dns_recordset" "website_record" {
   data    = ["${var.S3_BUCKET_ID}.website.yandexcloud.net"]
 }
 
-# TODO: make this function public
 resource "yandex_function" "cloud-function" {
   name               = var.FUNCTION_NAME
   description        = "${var.FUNCTION_NAME} api cloud function"
@@ -73,6 +72,18 @@ resource "yandex_function" "cloud-function" {
   }
 }
 
+resource "yandex_function_iam_binding" "function-iam" {
+  depends_on = [
+    yandex_function.cloud-function
+  ]
+
+  function_id = yandex_function.cloud-function.id
+  role        = "serverless.functions.invoker"
+
+  members = [
+    "system:allUsers",
+  ]
+}
 
 resource "yandex_ydb_database_serverless" "ydb" {
   name      = var.YDB_NAME
