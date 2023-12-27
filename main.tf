@@ -66,68 +66,53 @@ resource "yandex_function" "cloud-function" {
   service_account_id = var.SERVICE_ACCOUNT_ID
 }
 
-#resource "yandex_api_gateway" "api-gateway" {
-#  name = var.S3_BUCKET_ID
-#  description = "${var.S3_BUCKET_ID} API gateway"
-#  labels = {
-#    label       = "label"
-#    empty-label = ""
-#  }
-#  custom_domains {
-#    fqdn = "test.example.com"
-#    certificate_id = "<certificate_id_from_cert_manager>"
-#  }
-#  connectivity {
-#    network_id = "<dynamic network id>"
-#  }
-#  variables = {
-#    installation = "prod"
-#  }
-#  canary {
-#    weight    = 20
-#    variables = {
-#      installation = "dev"
-#    }
-#  }
-#  spec = <<-EOT
-#openapi: "3.0.0"
-#info:
-#  version: 1.0.0
-#  title: Test API
-#servers:
-#  - url: $API_GATEWAY_URL
-#  - url: $CLIENT_ORIGIN
-#paths:
-#  /:
-#    get:
-#      x-yc-apigateway-integration:
-#        type: object_storage
-#        bucket: $S3_BUCKET_ID
-#        object: index.html
-#  /{file+}:
-#    get:
-#      x-yc-apigateway-integration:
-#        type: object_storage
-#        bucket: $S3_BUCKET_ID
-#        object: '{file}'
-#        error_object: index.html
-#      parameters:
-#        - explode: false
-#          in: path
-#          name: file
-#          required: true
-#          schema:
-#            type: string
-#          style: simple
-#  /api/{slug+}:
-#    x-yc-apigateway-any-method:
-#      parameters:
-#        - name: slug
-#          in: path
-#      x-yc-apigateway-integration:
-#        type: cloud_functions
-#        payload_format_version: '1.0'
-#        function_id: $CLOUD_FUNCTION_ID
-#        service_account_id: $SERVICE_ACCOUNT_ID
-#EOT
-#}
+resource "yandex_api_gateway" "api-gateway" {
+  depends_on = [
+    yandex_function.cloud-function
+  ]
+
+  name = var.S3_BUCKET_ID
+  description = "${var.S3_BUCKET_ID} API gateway"
+
+  spec = <<-EOT
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Test API
+servers:
+  - url: ${yandex_api_gateway.api-gateway.domain}
+  - url: https://${var.S3_BUCKET_ID}
+paths:
+  /:
+    get:
+      x-yc-apigateway-integration:
+        type: object_storage
+        bucket: ${var.S3_BUCKET_ID}
+        object: index.html
+  /{file+}:
+    get:
+      x-yc-apigateway-integration:
+        type: object_storage
+        bucket: ${var.S3_BUCKET_ID}
+        object: '{file}'
+        error_object: index.html
+      parameters:
+        - explode: false
+          in: path
+          name: file
+          required: true
+          schema:
+            type: string
+          style: simple
+  /api/{slug+}:
+    x-yc-apigateway-any-method:
+      parameters:
+        - name: slug
+          in: path
+      x-yc-apigateway-integration:
+        type: cloud_functions
+        payload_format_version: '1.0'
+        function_id: ${yandex_function.cloud-function.id}
+        service_account_id: ${var.SERVICE_ACCOUNT_ID}
+EOT
+}
