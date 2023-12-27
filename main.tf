@@ -5,6 +5,7 @@ variable "SECRET_KEY" { type = string }
 variable "DNS_ZONE_ID" { type = string }
 variable "S3_BUCKET_ID" { type = string }
 variable "SSL_CERTIFICATE_ID" { type = string }
+variable "SERVICE_ACCOUNT_ID" { type = string }
 
 terraform {
   required_providers {
@@ -53,3 +54,80 @@ resource "yandex_dns_recordset" "website_record" {
   ttl     = 600
   data    = ["${var.S3_BUCKET_ID}.website.yandexcloud.net"]
 }
+
+resource "yandex_function" "cloud-function" {
+  name               = "${var.S3_BUCKET_ID}-api"
+  description        = "${var.S3_BUCKET_ID} api cloud function"
+  user_hash          = "any_user_defined_string"
+  runtime            = "nodejs16"
+  entrypoint         = "index.handler"
+  memory             = "128"
+  execution_timeout  = "3"
+  service_account_id = var.SERVICE_ACCOUNT_ID
+}
+
+#resource "yandex_api_gateway" "api-gateway" {
+#  name = var.S3_BUCKET_ID
+#  description = "${var.S3_BUCKET_ID} API gateway"
+#  labels = {
+#    label       = "label"
+#    empty-label = ""
+#  }
+#  custom_domains {
+#    fqdn = "test.example.com"
+#    certificate_id = "<certificate_id_from_cert_manager>"
+#  }
+#  connectivity {
+#    network_id = "<dynamic network id>"
+#  }
+#  variables = {
+#    installation = "prod"
+#  }
+#  canary {
+#    weight    = 20
+#    variables = {
+#      installation = "dev"
+#    }
+#  }
+#  spec = <<-EOT
+#openapi: "3.0.0"
+#info:
+#  version: 1.0.0
+#  title: Test API
+#servers:
+#  - url: $API_GATEWAY_URL
+#  - url: $CLIENT_ORIGIN
+#paths:
+#  /:
+#    get:
+#      x-yc-apigateway-integration:
+#        type: object_storage
+#        bucket: $S3_BUCKET_ID
+#        object: index.html
+#  /{file+}:
+#    get:
+#      x-yc-apigateway-integration:
+#        type: object_storage
+#        bucket: $S3_BUCKET_ID
+#        object: '{file}'
+#        error_object: index.html
+#      parameters:
+#        - explode: false
+#          in: path
+#          name: file
+#          required: true
+#          schema:
+#            type: string
+#          style: simple
+#  /api/{slug+}:
+#    x-yc-apigateway-any-method:
+#      parameters:
+#        - name: slug
+#          in: path
+#      x-yc-apigateway-integration:
+#        type: cloud_functions
+#        payload_format_version: '1.0'
+#        function_id: $CLOUD_FUNCTION_ID
+#        service_account_id: $SERVICE_ACCOUNT_ID
+#EOT
+#}
