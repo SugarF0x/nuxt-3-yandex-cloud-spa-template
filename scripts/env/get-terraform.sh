@@ -1,5 +1,6 @@
 source ./env/.env.token
 source ./env/.env.keys
+source ./env/.env.service-account
 source ./env/.env.cloud
 
 echo "
@@ -7,6 +8,7 @@ echo "
 TF_VAR_TOKEN=$TOKEN
 TF_VAR_ACCESS_KEY=$ACCESS_KEY
 TF_VAR_SECRET_KEY=$SECRET_KEY
+TF_VAR_SERVICE_ACCOUNT_ID=$SERVICE_ACCOUNT_ID
 
 TF_VAR_YC_ZONE=$YC_ZONE
 TF_VAR_S3_BUCKET_ID=$S3_BUCKET_ID
