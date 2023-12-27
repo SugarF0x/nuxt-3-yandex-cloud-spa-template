@@ -80,7 +80,6 @@ info:
   version: 1.0.0
   title: Test API
 servers:
-  - url: ${yandex_api_gateway.api-gateway.domain}
   - url: https://${var.S3_BUCKET_ID}
 paths:
   /:
