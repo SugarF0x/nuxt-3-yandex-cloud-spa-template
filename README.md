@@ -1,19 +1,32 @@
 # Nuxt 3 SPA + Yandex Cloud Template
 
-Nuxt 3 Yandex cloud deployment template with SPA mode, serverless functions 
+Nuxt 3 Yandex cloud deployment template in SPA mode, serverless functions and YDB instance.
+I use it myself for my own side projects but any feedback to improve the template is appreciated
 
 ## Development
 
-1. Define 3 environment variable files as displayed in the root examples: `.env.cloud`, `.env.local` and `.env.prod`
-2. Setup YC IAM cli profile (needed for deployment and working with non-local YDB instance)
-3. Install dependencies and run `yarn dev`
+1. Define 4 environment variable files as displayed in the `/env` examples
+2. Run `yarn terraform apply`
+3. Install dependencies `yarn` 
+4. Run dev `yarn dev`
+
+This will create your stack you defined in `/env`. Consider it production, 
+though I would recommend having different sets of `.env` files for actual production and development
 
 ## Deployment
 
-You can deploy to bucket, cloud functions and API Gateway individually or combined with `yarn deploy`.
-You can also run `yarn bd` to build and deploy right after.
-You need, however, `.env.prod` to be defined for this.
+Running `yarn terraform apply` creates bucket and cloud function instance, yet both are at the time empty.
+
+To deploy run `yarn bd` to build and deploy both front-end and back-end, or run these separately:
+
+```bash
+yarn build
+yarn deploy
+# or separately
+yarn deploy:frontend
+yarn deploy:backend
+```
 
 ## Contributions
 
-Any issue and/or pull request is a welcome one
+Any contribution is welcome 
