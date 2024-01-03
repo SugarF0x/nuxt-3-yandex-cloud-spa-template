@@ -1,6 +1,7 @@
 import { config } from 'dotenv'
 import { readFileSync, existsSync } from 'node:fs'
 
+// TODO(template): possibly figure out a different handler for linux only local db instance
 if (!existsSync('./terraform.tfstate')) throw new Error('TF state does not exist. Run `yarn terraform apply` first')
 
 const { database_path, ydb_api_endpoint } = JSON.parse(readFileSync("./terraform.tfstate", 'utf-8')).resources.find(e => e.type === 'yandex_ydb_database_serverless').instances[0].attributes
@@ -10,7 +11,7 @@ process.env.YDB_DATABASE = database_path
 
 const ENV_FILES = [
   process.env.NODE_ENV === 'production' ? 'prod' : 'local',
-  'token',
+  'keys',
   'cloud'
 ]
 

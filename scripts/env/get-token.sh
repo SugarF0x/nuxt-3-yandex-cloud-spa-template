@@ -1,12 +1,10 @@
-if [ -f "./env/.env.token" ] && ! test $(find "./env/.env.token" -mmin +60)
+if [ -f "./env/.env.keys" ] && ! test $(find "./env/.env.keys" -mmin +60)
 then
   exit 0
 fi
 
 TOKEN=$(yc iam create-token)
 
-echo "
-
-TOKEN=$TOKEN
-
-" >| ./env/.env.token
+cat env/.env.keys | sed 's/\(TOKEN=\)\(.*\)/\1'"$TOKEN"'/' > env/.env.keys.updated
+rm env/.env.keys
+mv env/.env.keys.updated env/.env.keys

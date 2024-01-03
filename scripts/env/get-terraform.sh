@@ -1,6 +1,4 @@
-source ./env/.env.token
 source ./env/.env.keys
-source ./env/.env.service-account
 source ./env/.env.cloud
 
 echo "
