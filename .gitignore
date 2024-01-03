@@ -18,14 +18,16 @@ logs
 .fleet
 .idea
 
-.terraform
-
 # Local env files
 .env
 .env.*
 !.env.example
 !.env.*.example
 
+# Terraform
+.terraform
+
 # These should be stored remotely for others to have access to deployment or for CI/CD, ideally in a separate bucket
+.terraform.lock.hcl
 *.tfstate
 *.tfstate.*
