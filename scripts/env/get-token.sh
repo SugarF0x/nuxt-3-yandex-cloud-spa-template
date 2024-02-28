@@ -1,4 +1,4 @@
-if [ -f "./env/.env.keys" ] && ! test $(find "./env/.env.keys" -mmin +60)
+if [ -f "./env/.env.keys" ] && ! test $(find "./env/.env.keys" -mmin +60) && [ ! $1 == "--force" ]
 then
   exit 0
 fi
