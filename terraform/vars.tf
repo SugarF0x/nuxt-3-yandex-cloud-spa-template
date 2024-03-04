@@ -1,0 +1,12 @@
+variable "YC_ZONE" { type = string }
+variable "TOKEN" { type = string }
+variable "ACCESS_KEY" { type = string }
+variable "SECRET_KEY" { type = string }
+variable "DNS_ZONE_ID" { type = string }
+variable "S3_BUCKET_ID" { type = string }
+variable "SSL_CERTIFICATE_ID" { type = string }
+variable "SERVICE_ACCOUNT_ID" { type = string }
+variable "FOLDER_ID" { type = string }
+variable "FUNCTION_NAME" { type = string }
+variable "YDB_NAME" { type = string }
+variable "GATEWAY_NAME" { type = string }

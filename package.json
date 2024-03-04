@@ -13,7 +13,7 @@
     "env:token": "sh scripts/env/get-token.sh",
     "env:terraform": "sh scripts/env/get-terraform.sh",
     "env:token-force": "sh scripts/env/get-token.sh --force",
-    "terraform": "yarn env && source scripts/env/export-terraform.sh && terraform",
+    "terraform": "yarn env && source scripts/env/export-terraform.sh && cd terraform && terraform",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare && patch-package",
