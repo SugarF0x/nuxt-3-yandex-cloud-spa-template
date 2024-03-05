@@ -19,7 +19,7 @@ async function doesUserAlreadyExist(username: string): Promise<boolean> {
     const { resultSets } = await session.executeQuery(`
       DECLARE $username AS Utf8;
       
-      SELECT COUNT(username) as count FROM user WHERE username = $username LIMIT 1;
+      SELECT COUNT(username) as count FROM users WHERE username = $username LIMIT 1;
     `, {
       "$username": TypedValues.utf8(username)
     })
@@ -39,7 +39,7 @@ async function createUser(username: string, password: string) {
       DECLARE $salt AS Utf8;
       DECLARE $iterations AS Uint16;
 
-      INSERT INTO user (username, created_at, hash, salt, iterations) 
+      INSERT INTO users (username, created_at, hash, salt, iterations) 
       VALUES ($username, $created_at, $hash, $salt, $iterations);
     `, {
       "$username": TypedValues.utf8(username),
