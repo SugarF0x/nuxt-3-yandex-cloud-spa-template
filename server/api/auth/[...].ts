@@ -27,7 +27,7 @@ export default NuxtAuthHandler({
           const { resultSets } = await session.executeQuery(`
             DECLARE $username AS Utf8;
 
-            SELECT * FROM user WHERE username = $username LIMIT 1;
+            SELECT * FROM users WHERE username = $username LIMIT 1;
           `, {
             "$username": TypedValues.utf8(username)
           })
