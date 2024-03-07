@@ -1,3 +1,5 @@
+rm -rf ./.output/server/node_modules
+
 # rollup server node modules to bypass YC CF dependency installation step
 NODE_ENV=production rollup -c scripts/rollup.config.js
 

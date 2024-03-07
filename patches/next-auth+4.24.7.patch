@@ -1,0 +1,15 @@
+diff --git a/node_modules/next-auth/package.json b/node_modules/next-auth/package.json
+index c89e03c..259eb95 100644
+--- a/node_modules/next-auth/package.json
++++ b/node_modules/next-auth/package.json
+@@ -57,6 +57,10 @@
+     "./providers/*": {
+       "types": "./providers/*.d.ts",
+       "default": "./providers/*.js"
++    },
++    "./core": {
++      "types": "./core/index.d.ts",
++      "default": "./core/index.js"
+     }
+   },
+   "files": [
