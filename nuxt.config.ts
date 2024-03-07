@@ -5,10 +5,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   typescript: { strict: true },
   experimental: { noVueServer: true },
-  modules: [
-    '@sidebase/nuxt-auth',
-    'modules/prepare-for-yandex-functions'
-  ],
+  modules: ['@sidebase/nuxt-auth'],
   nitro: {
     prerender: {
       crawlLinks: false,

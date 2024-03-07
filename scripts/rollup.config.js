@@ -16,7 +16,7 @@ const bundledVars = Object.entries(pick(process.env, compact(`
 writeFileSync('./env/.env.rollup', bundledVars)
 
 export default {
-  input: './.output/server/index.js',
+  input: './.output/server/index.mjs',
   output: {
     dir: '.output/temp/server-to-zip',
     format: 'cjs'
