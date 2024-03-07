@@ -7,7 +7,7 @@ source ./env/.env.cloud
 
 yc serverless function version create \
   --function-name="$FUNCTION_NAME" \
-  --runtime nodejs16 \
+  --runtime nodejs18 \
   --entrypoint index.handler \
   --memory 128m \
   --execution-timeout 3s \

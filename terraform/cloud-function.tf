@@ -3,7 +3,7 @@ resource "yandex_function" "cloud-function" {
   name               = var.FUNCTION_NAME
   description        = "${var.FUNCTION_NAME} api cloud function"
   user_hash          = "any_user_defined_string"
-  runtime            = "nodejs16"
+  runtime            = "nodejs18"
   entrypoint         = "index.handler"
   memory             = "128"
   execution_timeout  = "3"
