@@ -49,6 +49,9 @@ export default NuxtAuthHandler({
     async session({ token, session }): Promise<Session> {
       return { ...session, user: token.user }
     }
+  },
+  pages: {
+    signIn: '/login'
   }
 })
 
