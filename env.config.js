@@ -12,7 +12,7 @@ function prepare() {
   process.env.YDB_DATABASE = database_path
 
   const ENV_FILES = [
-    process.env.NODE_ENV === 'production' ? 'prod' : 'local',
+    'local',
     'keys',
     'cloud'
   ]
