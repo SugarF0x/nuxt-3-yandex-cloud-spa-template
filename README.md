@@ -7,8 +7,9 @@ I use it myself for my own side projects but any feedback to improve the templat
 
 1. Define 3 environment variable files as displayed in the `/env` examples
 2. Install dependencies `yarn` 
-3. Run `yarn terraform apply`
-4. Run dev `yarn dev`
+3. Initialize terraform `yarn terraform init`
+4. Instantiate terraform `yarn terraform apply`
+5. Run dev `yarn dev`
 
 This will create your stack you defined in `/env`. Consider it production, 
 though I would recommend having different sets of `.env` files for actual production and development
