@@ -10,3 +10,4 @@ variable "FOLDER_ID" { type = string }
 variable "FUNCTION_NAME" { type = string }
 variable "YDB_NAME" { type = string }
 variable "GATEWAY_NAME" { type = string }
+variable "LOCKBOX_NAME" { type = string }

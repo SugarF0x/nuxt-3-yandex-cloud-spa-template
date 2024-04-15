@@ -15,7 +15,8 @@ yc serverless function version create \
   --execution-timeout 3s \
   --source-path ./.output/temp/server.zip \
   --environment=`paste -s -d, env/.env.rollup` \
-  --service-account-id="$SERVICE_ACCOUNT_ID"
+  --service-account-id="$SERVICE_ACCOUNT_ID" \
+  --secret=id=<SECRET_ID>,key=<SECRET_KEY>,environment-variable=<SECRET_KEY>
 
 rm -rf ./.output/temp
 

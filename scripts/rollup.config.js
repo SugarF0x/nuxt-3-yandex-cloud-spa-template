@@ -6,7 +6,6 @@ import commonjs from '@rollup/plugin-commonjs'
 import json from '@rollup/plugin-json'
 
 const bundledVars = Object.entries(pick(process.env, compact(`
-  AUTH_SECRET
   AUTH_ORIGIN
   NEXTAUTH_URL
   YDB_SDK_PRETTY_LOGS
