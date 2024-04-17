@@ -1,5 +1,9 @@
-# TODO: figure out how to pass env vars straight into here
 resource "yandex_function" "cloud-function" {
+  depends_on = [
+    yandex_lockbox_secret_version.secrets_version
+  ]
+
+  service_account_id = var.SERVICE_ACCOUNT_ID
   name               = var.FUNCTION_NAME
   description        = "${var.FUNCTION_NAME} api cloud function"
   user_hash          = "any_user_defined_string"
@@ -8,8 +12,22 @@ resource "yandex_function" "cloud-function" {
   memory             = "128"
   execution_timeout  = "3"
   folder_id          = var.FOLDER_ID
+  environment        = { for tuple in regexall("(.*)=(.*)", file("../env/.env.rollup")) : tuple[0] => tuple[1] }
+
   content {
     zip_filename = "../server/dummy.zip"
+#     zip_filename = fileexists("../.output/temp/server.zip") ? "../.output/temp/server.zip" : "../server/dummy.zip"
+  }
+
+  dynamic "secrets" {
+    for_each = yandex_lockbox_secret_version.secrets_version.entries
+    # keys are there as defined in resource, WebStorm argues they are not :shrug:
+    content {
+      environment_variable = secrets.value.key
+      key                  = secrets.value.key
+      id                   = yandex_lockbox_secret_version.secrets_version.secret_id
+      version_id           = yandex_lockbox_secret_version.secrets_version.id
+    }
   }
 }
 

@@ -11,10 +11,11 @@ resource "yandex_lockbox_secret_version" "secrets_version" {
 
   secret_id = yandex_lockbox_secret.secrets.id
 
-  for_each = { for tuple in regexall("(.*)=(.*)", file("../env/.env.local")) : tuple[0] => tuple[1] }
-
-  entries {
-    key        = each.key
-    text_value = each.value
+  dynamic "entries" {
+    for_each = { for tuple in regexall("(.*)=(.*)", file("../env/.env.local")) : tuple[0] => tuple[1] }
+    content {
+      key        = entries.key
+      text_value = entries.value
+    }
   }
 }
