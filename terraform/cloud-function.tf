@@ -15,8 +15,7 @@ resource "yandex_function" "cloud-function" {
   environment        = { for tuple in regexall("(.*)=(.*)", file("../env/.env.rollup")) : tuple[0] => tuple[1] }
 
   content {
-    zip_filename = "../server/dummy.zip"
-#     zip_filename = fileexists("../.output/temp/server.zip") ? "../.output/temp/server.zip" : "../server/dummy.zip"
+    zip_filename = fileexists("../.output/temp/server.zip") ? "../.output/temp/server.zip" : "../server/dummy.zip"
   }
 
   dynamic "secrets" {
