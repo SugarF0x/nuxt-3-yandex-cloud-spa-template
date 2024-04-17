@@ -1,3 +1,5 @@
+// TODO: explore the possibility of moving tables to a terraform module
+
 resource "yandex_ydb_table" "users" {
   depends_on = [
     yandex_ydb_database_serverless.ydb

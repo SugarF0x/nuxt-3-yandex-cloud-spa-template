@@ -11,8 +11,8 @@ I use it myself for my own side projects but any feedback to improve the templat
 4. Instantiate terraform `yarn terraform apply`
 5. Run dev `yarn dev`
 
-This will create your stack you defined in `/env`. Consider it production, 
-though I would recommend having different sets of `.env` files for actual production and development
+This will create your stack you defined in `/env`. Consider it staging, 
+a different stack is recommended for production
 
 ## Deployment
 
@@ -23,6 +23,7 @@ Running `yarn terraform apply` creates:
 * API Gateway: forward every path of `/api/*` to the server; the rest - to the bucket (SSL included)
 * DNS Record: forward every specified bucket id request to API gateway
 * Managed YDB: instande with an empty read-to-use users table
+* Lockbox: all env variables defined in `.env.local` will be pushed there and then auto added to server `process.env`
 
 To deploy run `yarn bd` to build and deploy both front-end and back-end, or run these separately:
 
