@@ -5,6 +5,8 @@ import { nodeResolve } from "@rollup/plugin-node-resolve"
 import commonjs from '@rollup/plugin-commonjs'
 import json from '@rollup/plugin-json'
 
+// TODO(template): export this to a dedicated function and run before build
+
 const bundledVars = Object.entries(pick(process.env, compact(`
   AUTH_ORIGIN
   NEXTAUTH_URL

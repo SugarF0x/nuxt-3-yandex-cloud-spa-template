@@ -3,13 +3,16 @@ import { readFileSync, existsSync } from 'node:fs'
 
 function prepare() {
   // TODO(template): possibly figure out a different handler for linux only local db instance
-  if (!existsSync('./terraform/.terraform.lock.hcl')) throw new Error('TF lock does not exist. Run `yarn terraform init` first')
-  if (!existsSync('./terraform/terraform.tfstate')) throw new Error('TF state does not exist. Run `yarn terraform apply` first')
 
-  const { database_path, ydb_api_endpoint } = JSON.parse(readFileSync("./terraform/terraform.tfstate", 'utf-8')).resources.find(e => e.type === 'yandex_ydb_database_serverless').instances[0].attributes
+  if (existsSync('./terraform/terraform.tfstate')) {
+    const { database_path, ydb_api_endpoint } = JSON.parse(readFileSync("./terraform/terraform.tfstate", 'utf-8')).resources.find(e => e.type === 'yandex_ydb_database_serverless').instances[0].attributes
 
-  process.env.YDB_ENDPOINT = `grpcs://${ydb_api_endpoint}`
-  process.env.YDB_DATABASE = database_path
+    process.env.YDB_ENDPOINT = `grpcs://${ydb_api_endpoint}`
+    process.env.YDB_DATABASE = database_path
+  } else {
+    console.warn('TF state does not exist. Run `yarn terraform apply` first. Otherwise YDB is unavailable')
+    // TODO(template): throw in production after another rollup todo is implemented
+  }
 
   const ENV_FILES = [
     'local',

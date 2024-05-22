@@ -1,3 +1,5 @@
+// TODO: make lockbox optional, it eats up quite a bit of billing :angery:
+
 resource "yandex_lockbox_secret" "secrets" {
   name        = var.LOCKBOX_NAME
   description = "${var.LOCKBOX_NAME} secrets"

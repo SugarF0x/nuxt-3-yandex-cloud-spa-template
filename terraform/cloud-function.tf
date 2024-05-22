@@ -12,7 +12,7 @@ resource "yandex_function" "cloud-function" {
   memory             = "128"
   execution_timeout  = "3"
   folder_id          = var.FOLDER_ID
-  environment        = { for tuple in regexall("(.*)=(.*)", file("../env/.env.rollup")) : tuple[0] => tuple[1] }
+  environment        = fileexists("../env/.env.rollup") ? { for tuple in regexall("(.*)=(.*)", file("../env/.env.rollup")) : tuple[0] => tuple[1] } : null
 
   content {
     zip_filename = fileexists("../.output/temp/server.zip") ? "../.output/temp/server.zip" : "../server/dummy.zip"
